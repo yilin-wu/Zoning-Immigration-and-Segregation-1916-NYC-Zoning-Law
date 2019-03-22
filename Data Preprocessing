@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+#import data 1910 NYC tract Level Data
+
+dataset = pd.read_csv('nhgis0005_ds40_1910_tract.csv')
+dataset2 = pd.read_csv('nhgis0005_ds48_1920_tract.csv')
+dataset3 = pd.read_csv('nhgis0005_ds66_1930_tract.csv')
+
+df=pd.DataFrame(dataset)
+df2=pd.DataFrame(dataset2)
+df3=pd.DataFrame(dataset3)
+
+# Redefining Variable(Column)Names
+Tract1910= df.iloc[:,0:10]
+Tract1910['TotPop']=df['A6C001'];
+Tract1910['Male']=df['A6A001'];
+Tract1910['Female']=df['A6A002'];
+Tract1910['Male']=df['A6A001'];
+Tract1910['Female']=df['A6A002'];
+Tract1910['Black']=df['A60006'];
+
+
