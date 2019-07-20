@@ -1,1 +1,15 @@
-#Create Hexagon
+#Create Hexagon Net
+hex_points<-spsample(boro,type="hexagonal",cellsize=500)
+hex_grid<-HexPoints2SpatialPolygons(hex_points,dx=500)
+
+# calculate area of the hexagon
+hex_grid$area<-area(hex_grid)
+
+# Unifying coordinate system for further analysis
+
+writeOGR(hex_grid_500,"~/Desktop/Dissertation/Zoning Laws and Labor Market Inequality/Data In Use",'hex500', driver="ESRI Shapefile")
+hex500<-st_read('hex500.shp')
+hex500<-st_transform(hex500,CRS("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs"))
+
+#create ID number for each hexagon
+hex500$ID<-seq.int(nrow(hex500))
