@@ -1,0 +1,39 @@
+#median and average family income
+
+hex500$totfam<-hex500$faminc1000less+hex500$faminc1000more+hex500$faminc2000more+hex500$faminc3000more+hex500$faminc4000more+hex500$faminc5000more+hex500$faminc6000more+hex500$faminc7000more+hex500$faminc8000more+hex500$faminc9000more+hex500$faminc10000more+hex500$faminc15000more+hex500$faminc25000more
+hex500$midfam<-hex500$totfam/2
+hex500$famincav<-(hex500$faminc1000less*500+hex500$faminc1000more*1500+hex500$faminc2000more*2500+hex500$faminc3000more*3500+hex500$faminc4000more*4500+hex500$faminc5000more*5500+hex500$faminc6000more*6500+hex500$faminc7000more*7500+hex500$faminc8000more*8500+hex500$faminc9000more*9500+hex500$faminc10000more*12500+hex500$faminc15000more*20000+hex500$faminc25000more*30000)/hex500$totfam
+hex500$midfaminc<-''
+for(i in 1:nrow(hex500)){
+  inc<-c(hex500$faminc1000less[i], 
+         hex500$faminc1000less[i]+hex500$faminc1000more[i], 
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i]+hex500$faminc8000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i]+hex500$faminc8000more[i]+hex500$faminc9000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i]+hex500$faminc8000more[i]+hex500$faminc9000more[i]+hex500$faminc10000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i]+hex500$faminc8000more[i]+hex500$faminc9000more[i]+hex500$faminc10000more[i]+hex500$faminc15000more[i],
+         hex500$faminc1000less[i]+hex500$faminc1000more[i]+hex500$faminc2000more[i]+hex500$faminc3000more[i]+hex500$faminc4000more[i]+hex500$faminc5000more[i]+hex500$faminc6000more[i]+hex500$faminc7000more[i]+hex500$faminc8000more[i]+hex500$faminc9000more[i]+hex500$faminc10000more[i]+hex500$faminc15000more[i]+hex500$faminc25000more[i])
+  inc<-c(inc,hex500$midfam[i])
+  inc<-sort(inc)
+  hex500$midfaminc[i]=which(inc==hex500$midfam[i])
+}
+
+hex500$midfamv<-""
+hex500$midfamv[hex500$midfaminc==1]<-500
+hex500$midfamv[hex500$midfaminc==2]<-1500
+hex500$midfamv[hex500$midfaminc==3]<-2500
+hex500$midfamv[hex500$midfaminc==4]<-3500
+hex500$midfamv[hex500$midfaminc==5]<-4500
+hex500$midfamv[hex500$midfaminc==6]<-5500
+hex500$midfamv[hex500$midfaminc==7]<-6500
+hex500$midfamv[hex500$midfaminc==8]<-7500
+hex500$midfamv[hex500$midfaminc==9]<-8500
+hex500$midfamv[hex500$midfaminc==10]<-9500
+hex500$midfamv[hex500$midfaminc==11]<-12500
+hex500$midfamv[hex500$midfaminc==12]<-20000
+hex500$midfamv[hex500$midfaminc==13]<-30000
