@@ -1,0 +1,46 @@
+#Intersection of Zoning and Hexgon map
+hex500_zone<-as.tibble(st_intersection(hex500,zoning1961std))
+
+hex500_zone$intarea<-st_area(hex500_zone$geometry)
+hex500_zone$areaweight<-hex500_zone$intarea/hex500_zone$area
+hex500_zone$areaweight<-as.numeric(hex500_zone$areaweight)
+
+
+#Land Use types of each hexagon
+hex500$Use.Type<- ""
+for( i in 1:nrow(hex500)){
+  type=sort(unique(as.character(hex500_zone$Use.Type[hex500_zone$ID==i])))
+  hex500$Use.Type[hex500$ID==i] = paste0(type, collapse = "/")
+}
+
+
+#manufacturing dummy
+
+for(i in 1:nrow(hex500)){
+  if(grepl('M',hex500$Use.Type[i])==T){hex500$M[i]=1
+  }else{hex500$M[i]=0}
+}
+
+
+# Manufacturing Share
+
+hex500$Mshare<-""
+for(i in 1:nrow(hex500)){
+ hex500$Mshare[hex500$ID==i]= sum(hex500_zone$areaweight[hex500_zone$ID==i & hex500_zone$Use.Type=='M'])
+}
+
+
+
+#Floor area ratio
+
+hex500$FAR<-0
+
+for (i in 1:nrow(hex500_zone)){
+  for (j in 1:nrow(hex500)){
+    if (hex500_zone$ID[i]==hex500$ID[j]){
+      if(is.na(hex500_zone$MaximumFAR[i])==FALSE){
+        hex500$FAR[j]=hex500$FAR[j]+hex500_zone$MaximumFAR[i]*hex500_zone$areaweight[i]
+        } else {hex500$FAR[j]=hex500$FAR[j]}
+      }
+  }
+}
