@@ -1,0 +1,108 @@
+## Function to merge---1960
+Tract_to_Hex<-function(Var2){
+  hex500$newcol<-0
+  for (i in 1:nrow(hex500_1960)){
+    for (j in 1:nrow(hex500)){
+      if (hex500_1960$ID[i]==hex500$ID[j]){
+        hex500$newcol[j]=hex500$newcol[j]+Var2[i]*hex500_1960$areaweight[i]
+      }
+    }
+  }
+  return(hex500$newcol)
+}
+
+#individual command to merge
+hex500$noschool1960<-Tract_to_Hex(hex500_1960$noschool)
+hex500$kindergarten1960<-Tract_to_Hex(hex500_1960$Kindergarten)
+hex500$elementary1960<-Tract_to_Hex(hex500_1960$Elementary)
+hex500$highschool1960<-Tract_to_Hex(hex500_1960$Highschool)
+hex500$college1960<-Tract_to_Hex(hex500_1960$College)
+hex500$school4y1960<-Tract_to_Hex(hex500_1960$school1.4)
+hex500$school7y1960<-Tract_to_Hex(hex500_1960$school5.7)
+hex500$school8y1960<-Tract_to_Hex(hex500_1960$school8)
+hex500$schoolhigh3y1960<-Tract_to_Hex(hex500_1960$schoolhigh1.3)
+hex500$schoolhigh4y1960<-Tract_to_Hex(hex500_1960$schoolhigh4)
+hex500$schoolcol3y1960<-Tract_to_Hex(hex500_1960$schoolcollege1.3)
+hex500$schoolcol4y1960<-Tract_to_Hex(hex500_1960$schoolcollege4)
+hex500$HV5000_1960<-Tract_to_Hex(hex500_1960$HV.5000)
+hex500$HV9999_1960<-Tract_to_Hex(hex500_1960$HV5000.9999)
+hex500$HV14999_1960<-Tract_to_Hex(hex500_1960$HV10000.14999)
+hex500$HV19999_1960<-Tract_to_Hex(hex500_1960$HV15000.19999)
+hex500$HV24999_1960<-Tract_to_Hex(hex500_1960$HV20000.24999)
+hex500$HV25000_1960<-Tract_to_Hex(hex500_1960$HV.25000)
+hex500$employed<-Tract_to_Hex(hex500_1960$Employed)
+hex500$armed<-Tract_to_Hex(hex500_1960$Armed)
+hex500$notinlab<-Tract_to_Hex(hex500_1960$Notinlab)
+hex500$Professional<-Tract_to_Hex(hex500_1960$Professional)
+hex500$Farmers<-Tract_to_Hex(hex500_1960$Farmer)
+hex500$Manager<-Tract_to_Hex(hex500_1960$Manager)
+hex500$Clerical<-Tract_to_Hex(hex500_1960$Clerical)
+hex500$Sales<-Tract_to_Hex(hex500_1960$Sales)
+hex500$Craftsmen<-Tract_to_Hex(hex500_1960$Farmlaborer)
+hex500$Operatives<-Tract_to_Hex(hex500_1960$Operatives)
+hex500$Householdw<-Tract_to_Hex(hex500_1960$Householdw)
+hex500$Service<-Tract_to_Hex(hex500_1960$Service)
+
+#function to merge 1970
+
+Tract_to_Hex<-function(Var2){
+  hex500_2$newcol<-0
+  for (i in 1:nrow(hex500_1970)){
+    for (j in 1:nrow(hex500_2)){
+      if (hex500_1970$ID[i]==hex500_2$ID[j]){
+        hex500_2$newcol[j]=hex500_2$newcol[j]+Var2[i]*hex500_1970$areaweight[i]
+      }
+    }
+  }
+  return(hex500_2$newcol)
+}
+hex500_2$pop<-Tract_to_Hex(hex500_1970$TotPop)
+hex500_2$black<-Tract_to_Hex(hex500_1970$Black)
+hex500_2$Tothouse<-Tract_to_Hex(hex500_1970$Tothouse)
+hex500_2$ownero<-Tract_to_Hex(hex500_1970$Ownero)
+hex500_2$rentero<-Tract_to_Hex(hex500_1970$Rentero)
+hex500_2$pprone<-Tract_to_Hex(hex500_1970$X.1ppr)
+hex500_2$unemployed<-Tract_to_Hex(hex500_1970$Unemployed)
+hex500_2$faminc6977less<-Tract_to_Hex(hex500_1970$FamIncome.1000)
+hex500_2$faminc6977more<-Tract_to_Hex(hex500_1970$FamIncome1000.1999)
+hex500_2$faminc13956more<-Tract_to_Hex(hex500_1970$FamIncome2000.2999)
+hex500_2$faminc20934more<-Tract_to_Hex(hex500_1970$FamIncome3000.3999)
+hex500_2$faminc27911more<-Tract_to_Hex(hex500_1970$FamIncome4000.4999)
+hex500_2$faminc34890more<-Tract_to_Hex(hex500_1970$FamIncome5000.5999)
+hex500_2$faminc41868more<-Tract_to_Hex(hex500_1970$FamIncome6000.6999)
+hex500_2$faminc48846more<-Tract_to_Hex(hex500_1970$FamIncome7000.7999)
+hex500_2$faminc55824more<-Tract_to_Hex(hex500_1970$FamIncome8000.8999)
+hex500_2$faminc62802more<-Tract_to_Hex(hex500_1970$FamIncome9000.9999)
+hex500_2$faminc69780more<-Tract_to_Hex(hex500_1970$FamIncome10000.11999)
+hex500_2$faminc83736more<-Tract_to_Hex(hex500_1970$FamIncome12000.14999)
+hex500_2$faminc104670more<-Tract_to_Hex(hex500_1970$FamIncome15000.24999)
+hex500_2$faminc174450more<-Tract_to_Hex(hex500_1970$FamIncome25000.49999)
+hex500_2$faminc348899more<-Tract_to_Hex(hex500_1970$FamIncome.50000)
+hex500_2$noschool<-Tract_to_Hex(hex500_1970$noschool)
+hex500_2$kindergarten<-Tract_to_Hex(hex500_1970$Kindergarten)
+hex500_2$elementary<-Tract_to_Hex(hex500_1970$Elementary)
+hex500_2$highschool<-Tract_to_Hex(hex500_1970$Highschool)
+hex500_2$college<-Tract_to_Hex(hex500_1970$College)
+hex500_2$school4y<-Tract_to_Hex(hex500_1970$school1.4)
+hex500_2$school7y<-Tract_to_Hex(hex500_1970$school5.7)
+hex500_2$school8y<-Tract_to_Hex(hex500_1970$school8)
+hex500_2$schoolhigh3y<-Tract_to_Hex(hex500_1970$schoolhigh1.3)
+hex500_2$schoolhigh4y<-Tract_to_Hex(hex500_1970$schoolhigh4)
+hex500_2$schoolcollege3y<-Tract_to_Hex(hex500_1970$schoolcollege1.3)
+hex500_2$schoolcollege4y<-Tract_to_Hex(hex500_1970$schoolcollege4)
+hex500_2$HV34890less<-Tract_to_Hex(hex500_1970$HV.5000)
+hex500_2$HV34890more<Tract_to_Hex(hex500_1970$HV5000.9999)
+hex500_2$HV69780<-Tract_to_Hex(hex500_1970$HV10000.14999)
+hex500_2$HV104670<-Tract_to_Hex(hex500_1970$HV15000.19999)
+hex500_2$HV139560<-Tract_to_Hex(hex500_1970$HV20000.24999)
+hex500_2$HV174450<-Tract_to_Hex(hex500_1970$HV25000.34999)
+hex500_2$HV244229<-Tract_to_Hex(hex500_1970$HV35000.49999)
+hex500_2$HV348899<-Tract_to_Hex(hex500_1970$HV50000.)
+hex500_2$vacantforr<-Tract_to_Hex(hex500_1970$VacantforR)
+hex500_2$vacantfors<-Tract_to_Hex(hex500_1970$VacantforS)
+hex500_2$rent0<-Tract_to_Hex(hex500_1970$rent0)
+hex500_2$rent279<-Tract_to_Hex(hex500_1970$Rent.40)
+hex500_2$rent412<-Tract_to_Hex(hex500_1970$Rent40.59)
+hex500_2$rent551<-Tract_to_Hex(hex500_1970$Rent60.79)
+hex500_2$rent691<-Tract_to_Hex(hex500_1970$Rent80.99)
+
