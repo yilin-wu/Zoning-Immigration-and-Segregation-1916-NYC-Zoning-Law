@@ -1,0 +1,2162 @@
+--------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/elyn/Desktop/Dissertation/Zoning Laws and Labor Market Inequality/Data I
+> n Use/gelbach.log
+  log type:  text
+ opened on:  13 Oct 2019, 22:47:30
+
+. do "/Users/elyn/Desktop/Dissertation/Zoning Laws and Labor Market Inequality/Data In Use/g
+> elbach-decomposition.do"
+
+. ****************************************************************
+. *Computing Gelbach Decomposition coefficient
+. *************************************************************
+. 
+. 
+. *import and adjust
+. 
+. use "/Users/elyn/Desktop/Dissertation/Zoning Laws and Labor Market Inequality/Data In Use/
+> poli.dta"
+(Written by R.              )
+
+. destring, replace
+Mshare already numeric; no replace
+Cshare already numeric; no replace
+FAR already numeric; no replace
+Bshare already numeric; no replace
+lAvFI already numeric; no replace
+immigshare already numeric; no replace
+lTotPop already numeric; no replace
+water already numeric; no replace
+emp already numeric; no replace
+emp2 already numeric; no replace
+emp3 already numeric; no replace
+emp4 already numeric; no replace
+stadis already numeric; no replace
+stadis2 already numeric; no replace
+stadis3 already numeric; no replace
+stadis4 already numeric; no replace
+stations already numeric; no replace
+manhattan already numeric; no replace
+brooklyn already numeric; no replace
+island already numeric; no replace
+queens already numeric; no replace
+bronx already numeric; no replace
+ownerosh already numeric; no replace
+
+. 
+. global geo water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+. global boroNM brooklyn island bronx
+
+. 
+. * non manhattan
+. 
+. preserve
+
+. drop if manhattan==1
+(284 observations deleted)
+
+. 
+. local controls lTotPop $geo $boroNM
+
+. 
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 3268
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns brooklyn island bronx      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.2761092    .037536    -7.36   0.000    -.3496784   -.2025399
+     lTotPop |   .0820345   .0081986    10.01   0.000     .0659655    .0981035
+       water |  -.0314257   .0256369    -1.23   0.220    -.0816731    .0188218
+         emp |   .0002746   .0000494     5.56   0.000     .0001779    .0003714
+        emp2 |  -3.56e-08   4.75e-09    -7.49   0.000    -4.49e-08   -2.63e-08
+        emp3 |   1.43e-12   1.85e-13     7.71   0.000     1.06e-12    1.79e-12
+        emp4 |  -1.84e-17   2.50e-18    -7.37   0.000    -2.33e-17   -1.35e-17
+      stadis |  -.0011243   .0000716   -15.70   0.000    -.0012647    -.000984
+     stadis2 |   4.77e-07   3.65e-08    13.05   0.000     4.05e-07    5.48e-07
+     stadis3 |  -7.60e-11   6.80e-12   -11.18   0.000    -8.93e-11   -6.26e-11
+     stadis4 |   4.21e-15   4.10e-16    10.29   0.000     3.41e-15    5.02e-15
+    stations |   .0866874   .0331381     2.62   0.009     .0217379    .1516368
+    brooklyn |   .1812507   .0255888     7.08   0.000     .1310976    .2314038
+      island |   .1286142   .0303982     4.23   0.000     .0690349    .1881935
+       bronx |     .68235   .0302467    22.56   0.000     .6230676    .7416324
+       _cons |   3.177565   .3460738     9.18   0.000     2.499272    3.855857
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns brooklyn island bronx  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.0036633   .0401595    -0.09   0.927    -.0823746     .075048
+     lTotPop |   .0584342   .0077231     7.57   0.000     .0432971    .0735712
+       water |  -.1033386   .0243482    -4.24   0.000    -.1510602    -.055617
+         emp |   .0002188   .0000462     4.74   0.000     .0001283    .0003093
+        emp2 |  -2.84e-08   4.44e-09    -6.38   0.000    -3.71e-08   -1.97e-08
+        emp3 |   1.13e-12   1.73e-13     6.53   0.000     7.90e-13    1.47e-12
+        emp4 |  -1.42e-17   2.34e-18    -6.08   0.000    -1.88e-17   -9.62e-18
+      stadis |  -.0007691   .0000686   -11.22   0.000    -.0009036   -.0006347
+     stadis2 |   3.62e-07   3.44e-08    10.52   0.000     2.95e-07    4.29e-07
+     stadis3 |  -5.97e-11   6.37e-12    -9.37   0.000    -7.22e-11   -4.72e-11
+     stadis4 |   3.36e-15   3.83e-16     8.77   0.000     2.61e-15    4.11e-15
+    stations |   .1273874   .0308382     4.13   0.000     .0669456    .1878293
+    brooklyn |   .0931178   .0241868     3.85   0.000     .0457126    .1405229
+      island |   .1279823    .028565     4.48   0.000     .0719958    .1839687
+       bronx |   .4754697   .0300949    15.80   0.000     .4164848    .5344546
+    ownerosh |  -.9363435   .0464489   -20.16   0.000    -1.027382   -.8453054
+      Bshare |   .6066279    .089249     6.80   0.000     .4317031    .7815527
+  immigshare |   1.860293   .1480669    12.56   0.000     1.570087    2.150499
+       _cons |   .9139927   .3493965     2.62   0.009     .2291881    1.598797
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations brookl
+> yn island bronx
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |  -.2987617   .0193392   -15.45   0.000    -.3366657   -.2608577
+          g1 |  -.2987617   .0193392   -15.45   0.000    -.3366657   -.2608577
+          g3 |   .1119013   .0120122     9.32   0.000     .0883579    .1354447
+        __TC |  -.4856221   .0393672   -12.34   0.000    -.5627803   -.4084639
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 3268
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons brooklyn island bronx      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .3716054   .0872369     4.26   0.000     .2006243    .5425865
+     lTotPop |   .0798312   .0082957     9.62   0.000     .0635719    .0960904
+       water |   .0003583   .0253902     0.01   0.989    -.0494057    .0501222
+         emp |   .0002305   .0000497     4.64   0.000     .0001332    .0003278
+        emp2 |  -3.24e-08   4.79e-09    -6.77   0.000    -4.18e-08   -2.30e-08
+        emp3 |   1.33e-12   1.87e-13     7.14   0.000     9.67e-13    1.70e-12
+        emp4 |  -1.74e-17   2.52e-18    -6.90   0.000    -2.23e-17   -1.24e-17
+      stadis |  -.0011724   .0000719   -16.31   0.000    -.0013134   -.0010315
+     stadis2 |   5.04e-07   3.66e-08    13.78   0.000     4.33e-07    5.76e-07
+     stadis3 |  -8.12e-11   6.80e-12   -11.94   0.000    -9.45e-11   -6.78e-11
+     stadis4 |   4.52e-15   4.10e-16    11.02   0.000     3.71e-15    5.32e-15
+    stations |   .0901717   .0333148     2.71   0.007      .024876    .1554675
+    brooklyn |   .2234813   .0249857     8.94   0.000     .1745103    .2724523
+      island |   .1516289   .0304016     4.99   0.000     .0920429    .2112149
+       bronx |   .7142576   .0300098    23.80   0.000     .6554394    .7730758
+       _cons |   1.088674   .1858527     5.86   0.000     .7244095    1.452939
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons brooklyn island bronx  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .6066279    .089249     6.80   0.000     .4317031    .7815527
+     lTotPop |   .0584342   .0077231     7.57   0.000     .0432971    .0735712
+       water |  -.1033386   .0243482    -4.24   0.000    -.1510602    -.055617
+         emp |   .0002188   .0000462     4.74   0.000     .0001283    .0003093
+        emp2 |  -2.84e-08   4.44e-09    -6.38   0.000    -3.71e-08   -1.97e-08
+        emp3 |   1.13e-12   1.73e-13     6.53   0.000     7.90e-13    1.47e-12
+        emp4 |  -1.42e-17   2.34e-18    -6.08   0.000    -1.88e-17   -9.62e-18
+      stadis |  -.0007691   .0000686   -11.22   0.000    -.0009036   -.0006347
+     stadis2 |   3.62e-07   3.44e-08    10.52   0.000     2.95e-07    4.29e-07
+     stadis3 |  -5.97e-11   6.37e-12    -9.37   0.000    -7.22e-11   -4.72e-11
+     stadis4 |   3.36e-15   3.83e-16     8.77   0.000     2.61e-15    4.11e-15
+    stations |   .1273874   .0308382     4.13   0.000     .0669456    .1878293
+    brooklyn |   .0931178   .0241868     3.85   0.000     .0457126    .1405229
+      island |   .1279823    .028565     4.48   0.000     .0719958    .1839687
+       bronx |   .4754697   .0300949    15.80   0.000     .4164848    .5344546
+    ownerosh |  -.9363435   .0464489   -20.16   0.000    -1.027382   -.8453054
+       lAvFI |  -.0036633   .0401595    -0.09   0.927    -.0823746     .075048
+  immigshare |   1.860293   .1480669    12.56   0.000     1.570087    2.150499
+       _cons |   .9139927   .3493965     2.62   0.009     .2291881    1.598797
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations brook
+> lyn island bronx
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .1313328   .0317579     4.14   0.000     .0690884    .1935771
+          g1 |   .1313328   .0317579     4.14   0.000     .0690884    .1935771
+          g3 |  -.3691165   .0344801   -10.71   0.000    -.4366962   -.3015368
+        __TC |   -.106451   .0692744    -1.54   0.124    -.2422263    .0293243
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 3268
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations brooklyn island bronx      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   .9996455   .1478611     6.76   0.000     .7098432    1.289448
+     lTotPop |   .0834067   .0082054    10.16   0.000     .0673245    .0994889
+       water |   .0176869   .0254009     0.70   0.486     -.032098    .0674718
+         emp |   .0002443   .0000493     4.96   0.000     .0001476    .0003409
+        emp2 |  -3.38e-08   4.75e-09    -7.12   0.000    -4.31e-08   -2.45e-08
+        emp3 |   1.39e-12   1.85e-13     7.50   0.000     1.03e-12    1.75e-12
+        emp4 |  -1.81e-17   2.50e-18    -7.23   0.000    -2.30e-17   -1.32e-17
+      stadis |  -.0011183   .0000718   -15.57   0.000     -.001259   -.0009775
+     stadis2 |   4.94e-07   3.65e-08    13.56   0.000     4.23e-07    5.66e-07
+     stadis3 |  -8.06e-11   6.77e-12   -11.91   0.000    -9.39e-11   -6.73e-11
+     stadis4 |   4.52e-15   4.08e-16    11.06   0.000     3.72e-15    5.31e-15
+    stations |   .0945113    .033177     2.85   0.004     .0294856     .159537
+    brooklyn |   .2117633   .0249661     8.48   0.000     .1628306     .260696
+      island |   .1289354   .0304609     4.23   0.000     .0692331    .1886376
+       bronx |   .6638244   .0309762    21.43   0.000     .6031123    .7245366
+       _cons |   .8065318   .1871686     4.31   0.000     .4396882    1.173375
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations brooklyn island bronx  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   1.860293   .1480669    12.56   0.000     1.570087    2.150499
+     lTotPop |   .0584342   .0077231     7.57   0.000     .0432971    .0735712
+       water |  -.1033386   .0243482    -4.24   0.000    -.1510602    -.055617
+         emp |   .0002188   .0000462     4.74   0.000     .0001283    .0003093
+        emp2 |  -2.84e-08   4.44e-09    -6.38   0.000    -3.71e-08   -1.97e-08
+        emp3 |   1.13e-12   1.73e-13     6.53   0.000     7.90e-13    1.47e-12
+        emp4 |  -1.42e-17   2.34e-18    -6.08   0.000    -1.88e-17   -9.62e-18
+      stadis |  -.0007691   .0000686   -11.22   0.000    -.0009036   -.0006347
+     stadis2 |   3.62e-07   3.44e-08    10.52   0.000     2.95e-07    4.29e-07
+     stadis3 |  -5.97e-11   6.37e-12    -9.37   0.000    -7.22e-11   -4.72e-11
+     stadis4 |   3.36e-15   3.83e-16     8.77   0.000     2.61e-15    4.11e-15
+    stations |   .1273874   .0308382     4.13   0.000     .0669456    .1878293
+    brooklyn |   .0931178   .0241868     3.85   0.000     .0457126    .1405229
+      island |   .1279823    .028565     4.48   0.000     .0719958    .1839687
+       bronx |   .4754697   .0300949    15.80   0.000     .4164848    .5344546
+    ownerosh |  -.9363435   .0464489   -20.16   0.000    -1.027382   -.8453054
+       lAvFI |  -.0036633   .0401595    -0.09   0.927    -.0823746     .075048
+      Bshare |   .6066279    .089249     6.80   0.000     .4317031    .7815527
+       _cons |   .9139927   .3493965     2.62   0.009     .2291881    1.598797
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations b
+> rooklyn island bronx
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |  -.5085327   .0580606    -8.76   0.000    -.6223295   -.3947359
+          g1 |  -.5085327   .0580606    -8.76   0.000    -.6223295   -.3947359
+          g3 |  -.3487041   .0540615    -6.45   0.000    -.4546627   -.2427455
+        __TC |   -1.36577   .1301234   -10.50   0.000    -1.620807   -1.110732
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 3268
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions brooklyn island bronx      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.8648366   .0435411   -19.86   0.000    -.9501756   -.7794976
+     lTotPop |   .0675082   .0078464     8.60   0.000     .0521296    .0828869
+       water |  -.1221196   .0248319    -4.92   0.000    -.1707892   -.0734501
+         emp |   .0002518   .0000469     5.37   0.000     .0001599    .0003436
+        emp2 |  -3.22e-08   4.52e-09    -7.14   0.000    -4.11e-08   -2.34e-08
+        emp3 |   1.28e-12   1.76e-13     7.28   0.000     9.38e-13    1.63e-12
+        emp4 |  -1.63e-17   2.38e-18    -6.84   0.000    -2.10e-17   -1.16e-17
+      stadis |  -.0008558   .0000697   -12.27   0.000    -.0009925   -.0007191
+     stadis2 |   3.79e-07   3.52e-08    10.76   0.000     3.10e-07    4.48e-07
+     stadis3 |  -6.14e-11   6.51e-12    -9.43   0.000    -7.42e-11   -4.86e-11
+     stadis4 |   3.46e-15   3.92e-16     8.84   0.000     2.69e-15    4.23e-15
+    stations |   .1213797   .0315834     3.84   0.000     .0594775    .1832819
+    brooklyn |   .1336151   .0241093     5.54   0.000     .0863616    .1808685
+      island |   .1692973   .0288036     5.88   0.000     .1128433    .2257512
+       bronx |   .5984189   .0290421    20.61   0.000     .5414974    .6553404
+       _cons |   1.166985   .1755335     6.65   0.000     .8229457    1.511024
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions brooklyn island bronx  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.9363435   .0464489   -20.16   0.000    -1.027382   -.8453054
+     lTotPop |   .0584342   .0077231     7.57   0.000     .0432971    .0735712
+       water |  -.1033386   .0243482    -4.24   0.000    -.1510602    -.055617
+         emp |   .0002188   .0000462     4.74   0.000     .0001283    .0003093
+        emp2 |  -2.84e-08   4.44e-09    -6.38   0.000    -3.71e-08   -1.97e-08
+        emp3 |   1.13e-12   1.73e-13     6.53   0.000     7.90e-13    1.47e-12
+        emp4 |  -1.42e-17   2.34e-18    -6.08   0.000    -1.88e-17   -9.62e-18
+      stadis |  -.0007691   .0000686   -11.22   0.000    -.0009036   -.0006347
+     stadis2 |   3.62e-07   3.44e-08    10.52   0.000     2.95e-07    4.29e-07
+     stadis3 |  -5.97e-11   6.37e-12    -9.37   0.000    -7.22e-11   -4.72e-11
+     stadis4 |   3.36e-15   3.83e-16     8.77   0.000     2.61e-15    4.11e-15
+    stations |   .1273874   .0308382     4.13   0.000     .0669456    .1878293
+    brooklyn |   .0931178   .0241868     3.85   0.000     .0457126    .1405229
+      island |   .1279823    .028565     4.48   0.000     .0719958    .1839687
+       bronx |   .4754697   .0300949    15.80   0.000     .4164848    .5344546
+  immigshare |   1.860293   .1480669    12.56   0.000     1.570087    2.150499
+       lAvFI |  -.0036633   .0401595    -0.09   0.927    -.0823746     .075048
+      Bshare |   .6066279    .089249     6.80   0.000     .4317031    .7815527
+       _cons |   .9139927   .3493965     2.62   0.009     .2291881    1.598797
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations bro
+> oklyn island bronx
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |   .0968774   .0125977     7.69   0.000     .0721864    .1215685
+          g1 |   .0968774   .0125977     7.69   0.000     .0721864    .1215685
+          g3 |  -.0236358   .0065866    -3.59   0.000    -.0365453   -.0107263
+        __TC |   .1701191   .0239433     7.11   0.000      .123191    .2170471
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. *manhattan
+. preserve
+
+. drop if manhattan==0
+(3,338 observations deleted)
+
+. local controls lTotPop $geo
+
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 277
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |   3.172566   .4673771     6.79   0.000     2.256524    4.088609
+     lTotPop |  -.2930584   .1078723    -2.72   0.007    -.5044842   -.0816326
+       water |  -.4092357   .3207603    -1.28   0.202    -1.037914     .219443
+         emp |  -.0021849   .0006526    -3.35   0.001     -.003464   -.0009058
+        emp2 |   5.01e-07   1.73e-07     2.90   0.004     1.63e-07    8.39e-07
+        emp3 |  -4.74e-11   1.69e-11    -2.80   0.005    -8.06e-11   -1.42e-11
+        emp4 |   1.43e-15   5.43e-16     2.62   0.009     3.61e-16    2.49e-15
+      stadis |   .0062028   .0051632     1.20   0.230    -.0039169    .0163225
+     stadis2 |  -.0000132   .0000103    -1.28   0.199    -.0000334    6.97e-06
+     stadis3 |   7.87e-09   7.66e-09     1.03   0.304    -7.14e-09    2.29e-08
+     stadis4 |  -1.64e-12   1.82e-12    -0.90   0.370    -5.21e-12    1.94e-12
+    stations |   1.260601   .2626809     4.80   0.000     .7457558    1.775446
+       _cons |  -15.38981   3.938609    -3.91   0.000    -23.10935   -7.670284
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |   3.012625   .5160969     5.84   0.000     2.001093    4.024156
+     lTotPop |  -.2953464   .1172914    -2.52   0.012    -.5252333   -.0654595
+       water |  -.4184249   .3219148    -1.30   0.194    -1.049366    .2125166
+         emp |  -.0025826   .0007121    -3.63   0.000    -.0039783   -.0011868
+        emp2 |   6.09e-07   1.90e-07     3.21   0.001     2.37e-07    9.81e-07
+        emp3 |  -5.78e-11   1.85e-11    -3.12   0.002    -9.41e-11   -2.15e-11
+        emp4 |   1.75e-15   5.90e-16     2.97   0.003     5.95e-16    2.91e-15
+      stadis |   .0065323   .0051879     1.26   0.208    -.0036357    .0167003
+     stadis2 |  -.0000145   .0000104    -1.40   0.163     -.000035    5.88e-06
+     stadis3 |   9.72e-09   7.88e-09     1.23   0.217    -5.73e-09    2.52e-08
+     stadis4 |  -2.28e-12   1.92e-12    -1.18   0.237    -6.05e-12    1.50e-12
+    stations |   1.276921   .2650631     4.82   0.000     .7574073    1.796435
+    ownerosh |   .4137864   2.511569     0.16   0.869    -4.508799    5.336372
+      Bshare |   .3239891   1.006105     0.32   0.747     -1.64794    2.295918
+  immigshare |   2.757185   2.239347     1.23   0.218    -1.631855    7.146225
+       _cons |  -14.45599   4.369313    -3.31   0.001    -23.01968   -5.892292
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |   .0047519   .0292394     0.16   0.871    -.0525562    .0620601
+          g1 |   .0047519   .0292394     0.16   0.871    -.0525562    .0620601
+          g3 |   .2525275   .2113213     1.19   0.232    -.1616547    .6667098
+        __TC |   .2620314   .2227024     1.18   0.239    -.1744573      .69852
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 277
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |  -2.258776   .6824768    -3.31   0.001    -3.596406   -.9211466
+     lTotPop |  -.2291937   .1149034    -1.99   0.046    -.4544002   -.0039872
+       water |  -.4158227   .3412228    -1.22   0.223    -1.084607    .2529617
+         emp |  -.0021254   .0007234    -2.94   0.003    -.0035432   -.0007076
+        emp2 |   4.39e-07   1.93e-07     2.27   0.023     6.02e-08    8.17e-07
+        emp3 |  -3.87e-11   1.88e-11    -2.06   0.039    -7.55e-11   -1.95e-12
+        emp4 |   1.12e-15   5.96e-16     1.89   0.059    -4.39e-17    2.29e-15
+      stadis |   .0083125   .0054695     1.52   0.129    -.0024076    .0190325
+     stadis2 |  -.0000193   .0000109    -1.77   0.076    -.0000406    2.04e-06
+     stadis3 |   1.24e-08   8.09e-09     1.54   0.125    -3.44e-09    2.83e-08
+     stadis4 |  -2.61e-12   1.93e-12    -1.35   0.175    -6.40e-12    1.17e-12
+    stations |   1.109199   .2786161     3.98   0.000     .5631214    1.655277
+       _cons |   9.924662   1.592038     6.23   0.000     6.804324      13.045
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .3239891   1.006105     0.32   0.747     -1.64794    2.295918
+     lTotPop |  -.2953464   .1172914    -2.52   0.012    -.5252333   -.0654595
+       water |  -.4184249   .3219148    -1.30   0.194    -1.049366    .2125166
+         emp |  -.0025826   .0007121    -3.63   0.000    -.0039783   -.0011868
+        emp2 |   6.09e-07   1.90e-07     3.21   0.001     2.37e-07    9.81e-07
+        emp3 |  -5.78e-11   1.85e-11    -3.12   0.002    -9.41e-11   -2.15e-11
+        emp4 |   1.75e-15   5.90e-16     2.97   0.003     5.95e-16    2.91e-15
+      stadis |   .0065323   .0051879     1.26   0.208    -.0036357    .0167003
+     stadis2 |  -.0000145   .0000104    -1.40   0.163     -.000035    5.88e-06
+     stadis3 |   9.72e-09   7.88e-09     1.23   0.217    -5.73e-09    2.52e-08
+     stadis4 |  -2.28e-12   1.92e-12    -1.18   0.237    -6.05e-12    1.50e-12
+    stations |   1.276921   .2650631     4.82   0.000     .7574073    1.796435
+    ownerosh |   .4137864   2.511569     0.16   0.869    -4.508799    5.336372
+       lAvFI |   3.012625   .5160969     5.84   0.000     2.001093    4.024156
+  immigshare |   2.757185   2.239347     1.23   0.218    -1.631855    7.146225
+       _cons |  -14.45599   4.369313    -3.31   0.001    -23.01968   -5.892292
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .0047607   .0296412     0.16   0.872     -.053335    .0628563
+          g1 |   .0047607   .0296412     0.16   0.872     -.053335    .0628563
+          g3 |  -.8762227   .7133535    -1.23   0.219     -2.27437    .5219244
+        __TC |  -.8667014   .7118038    -1.22   0.223    -2.261811    .5284083
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 277
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   5.012365   1.593897     3.14   0.002     1.888384    8.136345
+     lTotPop |  -.2731543   .1147271    -2.38   0.017    -.4980154   -.0482933
+       water |  -.3820976   .3413801    -1.12   0.263     -1.05119    .2869951
+         emp |  -.0023059   .0007518    -3.07   0.002    -.0037794   -.0008324
+        emp2 |   4.68e-07   1.99e-07     2.35   0.019     7.77e-08    8.59e-07
+        emp3 |  -4.22e-11   1.94e-11    -2.17   0.030    -8.03e-11   -4.08e-12
+        emp4 |   1.27e-15   6.21e-16     2.05   0.040     5.54e-17    2.49e-15
+      stadis |   .0092883   .0054759     1.70   0.090    -.0014442    .0200209
+     stadis2 |  -.0000224   .0000109    -2.06   0.040    -.0000438   -1.07e-06
+     stadis3 |   1.66e-08   8.14e-09     2.03   0.042     6.02e-10    3.25e-08
+     stadis4 |  -3.99e-12   1.96e-12    -2.04   0.042    -7.83e-12   -1.51e-13
+    stations |   1.175077   .2790713     4.21   0.000     .6281073    1.722047
+       _cons |   9.038052   1.589104     5.69   0.000     5.923466    12.15264
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   2.757185   2.239347     1.23   0.218    -1.631855    7.146225
+     lTotPop |  -.2953464   .1172914    -2.52   0.012    -.5252333   -.0654595
+       water |  -.4184249   .3219148    -1.30   0.194    -1.049366    .2125166
+         emp |  -.0025826   .0007121    -3.63   0.000    -.0039783   -.0011868
+        emp2 |   6.09e-07   1.90e-07     3.21   0.001     2.37e-07    9.81e-07
+        emp3 |  -5.78e-11   1.85e-11    -3.12   0.002    -9.41e-11   -2.15e-11
+        emp4 |   1.75e-15   5.90e-16     2.97   0.003     5.95e-16    2.91e-15
+      stadis |   .0065323   .0051879     1.26   0.208    -.0036357    .0167003
+     stadis2 |  -.0000145   .0000104    -1.40   0.163     -.000035    5.88e-06
+     stadis3 |   9.72e-09   7.88e-09     1.23   0.217    -5.73e-09    2.52e-08
+     stadis4 |  -2.28e-12   1.92e-12    -1.18   0.237    -6.05e-12    1.50e-12
+    stations |   1.276921   .2650631     4.82   0.000     .7574073    1.796435
+    ownerosh |   .4137864   2.511569     0.16   0.869    -4.508799    5.336372
+       lAvFI |   3.012625   .5160969     5.84   0.000     2.001093    4.024156
+      Bshare |   .3239891   1.006105     0.32   0.747     -1.64794    2.295918
+       _cons |  -14.45599   4.369313    -3.31   0.001    -23.01968   -5.892292
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |  -.0199127   .1218373    -0.16   0.870    -.2587094    .2188839
+          g1 |  -.0199127   .1218373    -0.16   0.870    -.2587094    .2188839
+          g3 |   -.559421    1.73749    -0.32   0.747    -3.964839    2.845997
+        __TC |  -.5992465   1.753182    -0.34   0.732    -4.035421    2.836928
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 277
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |   1.084835   2.697166     0.40   0.688    -4.201513    6.371183
+     lTotPop |  -.2450232    .124763    -1.96   0.050    -.4895541   -.0004922
+       water |  -.3419264   .3473664    -0.98   0.325    -1.022752    .3388993
+         emp |  -.0013198   .0006945    -1.90   0.057     -.002681    .0000413
+        emp2 |   1.80e-07   1.80e-07     1.00   0.317    -1.72e-07    5.33e-07
+        emp3 |  -1.40e-11   1.75e-11    -0.80   0.425    -4.84e-11    2.04e-11
+        emp4 |   3.99e-16   5.65e-16     0.71   0.480    -7.09e-16    1.51e-15
+      stadis |   .0089397   .0055836     1.60   0.109     -.002004    .0198834
+     stadis2 |  -.0000204   .0000111    -1.83   0.067    -.0000423    1.40e-06
+     stadis3 |   1.34e-08   8.31e-09     1.61   0.106    -2.87e-09    2.97e-08
+     stadis4 |  -2.84e-12   1.99e-12    -1.43   0.153    -6.73e-12    1.05e-12
+    stations |   1.149588   .2841033     4.05   0.000     .5927553     1.70642
+       _cons |   9.208529    1.65664     5.56   0.000     5.961574    12.45548
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |   .4137864   2.511569     0.16   0.869    -4.508799    5.336372
+     lTotPop |  -.2953464   .1172914    -2.52   0.012    -.5252333   -.0654595
+       water |  -.4184249   .3219148    -1.30   0.194    -1.049366    .2125166
+         emp |  -.0025826   .0007121    -3.63   0.000    -.0039783   -.0011868
+        emp2 |   6.09e-07   1.90e-07     3.21   0.001     2.37e-07    9.81e-07
+        emp3 |  -5.78e-11   1.85e-11    -3.12   0.002    -9.41e-11   -2.15e-11
+        emp4 |   1.75e-15   5.90e-16     2.97   0.003     5.95e-16    2.91e-15
+      stadis |   .0065323   .0051879     1.26   0.208    -.0036357    .0167003
+     stadis2 |  -.0000145   .0000104    -1.40   0.163     -.000035    5.88e-06
+     stadis3 |   9.72e-09   7.88e-09     1.23   0.217    -5.73e-09    2.52e-08
+     stadis4 |  -2.28e-12   1.92e-12    -1.18   0.237    -6.05e-12    1.50e-12
+    stations |   1.276921   .2650631     4.82   0.000     .7574073    1.796435
+  immigshare |   2.757185   2.239347     1.23   0.218    -1.631855    7.146225
+       lAvFI |   3.012625   .5160969     5.84   0.000     2.001093    4.024156
+      Bshare |   .3239891   1.006105     0.32   0.747     -1.64794    2.295918
+       _cons |  -14.45599   4.369313    -3.31   0.001    -23.01968   -5.892292
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |  -.3664465   .4104954    -0.89   0.372    -1.171003    .4381097
+          g1 |  -.3664465   .4104954    -0.89   0.372    -1.171003    .4381097
+          g3 |   .0559333   .1902426     0.29   0.769    -.3169354    .4288019
+        __TC |  -.6769597   .7060639    -0.96   0.338     -2.06082    .7069002
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. *brooklyn
+. preserve
+
+. drop if brooklyn==0
+(2,766 observations deleted)
+
+. local controls lTotPop $geo
+
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 834
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.1879209   .0937887    -2.00   0.045    -.3717434   -.0040984
+     lTotPop |   .0780619   .0168671     4.63   0.000     .0450029    .1111209
+       water |  -.0157647    .057805    -0.27   0.785    -.1290603    .0975309
+         emp |   .0011813    .000244     4.84   0.000     .0007032    .0016595
+        emp2 |  -1.59e-07   3.51e-08    -4.52   0.000    -2.27e-07   -8.99e-08
+        emp3 |   8.19e-12   2.08e-12     3.94   0.000     4.11e-12    1.23e-11
+        emp4 |  -1.48e-16   4.35e-17    -3.41   0.001    -2.34e-16   -6.31e-17
+      stadis |   .0003532   .0003053     1.16   0.247    -.0002451    .0009516
+     stadis2 |  -6.29e-07   2.65e-07    -2.37   0.018    -1.15e-06   -1.09e-07
+     stadis3 |   2.02e-10   8.39e-11     2.41   0.016     3.76e-11    3.67e-10
+     stadis4 |  -1.85e-14   8.64e-15    -2.14   0.032    -3.54e-14   -1.57e-15
+    stations |   .2331909   .0569634     4.09   0.000     .1215447     .344837
+       _cons |   .0324031   1.026066     0.03   0.975     -1.97865    2.043456
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.0195626   .1004874    -0.19   0.846    -.2165143     .177389
+     lTotPop |   .0466498   .0170896     2.73   0.006     .0131549    .0801447
+       water |   -.082974   .0568211    -1.46   0.144    -.1943412    .0283932
+         emp |   .0013135   .0002373     5.53   0.000     .0008483    .0017786
+        emp2 |  -1.79e-07   3.40e-08    -5.26   0.000    -2.46e-07   -1.12e-07
+        emp3 |   9.52e-12   2.01e-12     4.73   0.000     5.57e-12    1.35e-11
+        emp4 |  -1.79e-16   4.21e-17    -4.25   0.000    -2.61e-16   -9.65e-17
+      stadis |   .0003445   .0002935     1.17   0.240    -.0002307    .0009197
+     stadis2 |  -4.19e-07   2.56e-07    -1.64   0.102    -9.21e-07    8.31e-08
+     stadis3 |   1.23e-10   8.13e-11     1.52   0.130    -3.62e-11    2.83e-10
+     stadis4 |  -1.05e-14   8.38e-15    -1.25   0.211    -2.69e-14    5.94e-15
+    stations |   .2423663   .0547384     4.43   0.000     .1350811    .3496515
+    ownerosh |  -.8810266   .1312382    -6.71   0.000    -1.138249   -.6238046
+      Bshare |   .2749794   .1608888     1.71   0.087    -.0403568    .5903157
+  immigshare |   1.492608    .278579     5.36   0.000     .9466033    2.038613
+       _cons |  -1.605381   1.027338    -1.56   0.118    -3.618927    .4081659
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |  -.1570743   .0315458    -4.98   0.000    -.2189029   -.0952457
+          g1 |  -.1570743   .0315458    -4.98   0.000    -.2189029   -.0952457
+          g3 |   .0582153   .0216242     2.69   0.007     .0158326    .1005981
+        __TC |  -.2559333   .0661908    -3.87   0.000    -.3856649   -.1262017
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 834
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .0069711   .1403626     0.05   0.960    -.2681344    .2820767
+     lTotPop |   .0720536   .0167339     4.31   0.000     .0392558    .1048513
+       water |  -.0066092   .0578041    -0.11   0.909     -.119903    .1066847
+         emp |   .0012928   .0002433     5.31   0.000     .0008161    .0017696
+        emp2 |  -1.74e-07   3.49e-08    -5.00   0.000    -2.43e-07   -1.06e-07
+        emp3 |   9.00e-12   2.07e-12     4.35   0.000     4.94e-12    1.31e-11
+        emp4 |  -1.63e-16   4.35e-17    -3.74   0.000    -2.48e-16   -7.74e-17
+      stadis |   .0002972   .0003047     0.98   0.330    -.0003001    .0008945
+     stadis2 |  -5.99e-07   2.65e-07    -2.26   0.024    -1.12e-06   -7.94e-08
+     stadis3 |   1.98e-10   8.41e-11     2.36   0.018     3.34e-11    3.63e-10
+     stadis4 |  -1.84e-14   8.66e-15    -2.13   0.033    -3.54e-14   -1.47e-15
+    stations |   .2320425   .0571115     4.06   0.000      .120106    .3439789
+       _cons |  -1.657818   .5950659    -2.79   0.005    -2.824126   -.4915101
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .2749794   .1608888     1.71   0.087    -.0403568    .5903157
+     lTotPop |   .0466498   .0170896     2.73   0.006     .0131549    .0801447
+       water |   -.082974   .0568211    -1.46   0.144    -.1943412    .0283932
+         emp |   .0013135   .0002373     5.53   0.000     .0008483    .0017786
+        emp2 |  -1.79e-07   3.40e-08    -5.26   0.000    -2.46e-07   -1.12e-07
+        emp3 |   9.52e-12   2.01e-12     4.73   0.000     5.57e-12    1.35e-11
+        emp4 |  -1.79e-16   4.21e-17    -4.25   0.000    -2.61e-16   -9.65e-17
+      stadis |   .0003445   .0002935     1.17   0.240    -.0002307    .0009197
+     stadis2 |  -4.19e-07   2.56e-07    -1.64   0.102    -9.21e-07    8.31e-08
+     stadis3 |   1.23e-10   8.13e-11     1.52   0.130    -3.62e-11    2.83e-10
+     stadis4 |  -1.05e-14   8.38e-15    -1.25   0.211    -2.69e-14    5.94e-15
+    stations |   .2423663   .0547384     4.43   0.000     .1350811    .3496515
+    ownerosh |  -.8810266   .1312382    -6.71   0.000    -1.138249   -.6238046
+       lAvFI |  -.0195626   .1004874    -0.19   0.846    -.2165143     .177389
+  immigshare |   1.492608    .278579     5.36   0.000     .9466033    2.038613
+       _cons |  -1.605381   1.027338    -1.56   0.118    -3.618927    .4081659
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .0713543   .0342314     2.08   0.037     .0042619    .1384466
+          g1 |   .0713543   .0342314     2.08   0.037     .0042619    .1384466
+          g3 |  -.3503828   .0701055    -5.00   0.000    -.4877871   -.2129785
+        __TC |  -.2076743   .0972541    -2.14   0.033    -.3982889   -.0170597
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 834
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   1.181405   .2576146     4.59   0.000     .6764897    1.686321
+     lTotPop |   .0586291   .0166993     3.51   0.000     .0258991    .0913591
+       water |  -.0028343    .057049    -0.05   0.960    -.1146483    .1089797
+         emp |   .0014792   .0002382     6.21   0.000     .0010123    .0019461
+        emp2 |  -1.99e-07   3.42e-08    -5.81   0.000    -2.66e-07   -1.32e-07
+        emp3 |   1.03e-11   2.04e-12     5.05   0.000     6.29e-12    1.43e-11
+        emp4 |  -1.86e-16   4.28e-17    -4.34   0.000    -2.70e-16   -1.02e-16
+      stadis |   .0003213    .000301     1.07   0.286    -.0002686    .0009111
+     stadis2 |  -5.69e-07   2.62e-07    -2.17   0.030    -1.08e-06   -5.53e-08
+     stadis3 |   1.92e-10   8.31e-11     2.31   0.021     2.94e-11    3.55e-10
+     stadis4 |  -1.82e-14   8.55e-15    -2.13   0.033    -3.50e-14   -1.47e-15
+    stations |   .2361183   .0563889     4.19   0.000      .125598    .3466385
+       _cons |  -2.269261   .5885751    -3.86   0.000    -3.422847   -1.115675
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   1.492608    .278579     5.36   0.000     .9466033    2.038613
+     lTotPop |   .0466498   .0170896     2.73   0.006     .0131549    .0801447
+       water |   -.082974   .0568211    -1.46   0.144    -.1943412    .0283932
+         emp |   .0013135   .0002373     5.53   0.000     .0008483    .0017786
+        emp2 |  -1.79e-07   3.40e-08    -5.26   0.000    -2.46e-07   -1.12e-07
+        emp3 |   9.52e-12   2.01e-12     4.73   0.000     5.57e-12    1.35e-11
+        emp4 |  -1.79e-16   4.21e-17    -4.25   0.000    -2.61e-16   -9.65e-17
+      stadis |   .0003445   .0002935     1.17   0.240    -.0002307    .0009197
+     stadis2 |  -4.19e-07   2.56e-07    -1.64   0.102    -9.21e-07    8.31e-08
+     stadis3 |   1.23e-10   8.13e-11     1.52   0.130    -3.62e-11    2.83e-10
+     stadis4 |  -1.05e-14   8.38e-15    -1.25   0.211    -2.69e-14    5.94e-15
+    stations |   .2423663   .0547384     4.43   0.000     .1350811    .3496515
+    ownerosh |  -.8810266   .1312382    -6.71   0.000    -1.138249   -.6238046
+       lAvFI |  -.0195626   .1004874    -0.19   0.846    -.2165143     .177389
+      Bshare |   .2749794   .1608888     1.71   0.087    -.0403568    .5903157
+       _cons |  -1.605381   1.027338    -1.56   0.118    -3.618927    .4081659
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |  -.0823204   .0618189    -1.33   0.183    -.2034832    .0388423
+          g1 |  -.0823204   .0618189    -1.33   0.183    -.2034832    .0388423
+          g3 |  -.2230074   .1314673    -1.70   0.090    -.4806785    .0346638
+        __TC |  -.3876482   .1817166    -2.13   0.033    -.7438061   -.0314903
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 834
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.8718282   .1289483    -6.76   0.000    -1.124562   -.6190941
+     lTotPop |   .0665046   .0162231     4.10   0.000      .034708    .0983013
+       water |  -.0900108   .0575588    -1.56   0.118     -.202824    .0228024
+         emp |   .0011945   .0002319     5.15   0.000     .0007399     .001649
+        emp2 |  -1.63e-07   3.34e-08    -4.89   0.000    -2.28e-07   -9.77e-08
+        emp3 |   8.67e-12   1.99e-12     4.36   0.000     4.78e-12    1.26e-11
+        emp4 |  -1.63e-16   4.19e-17    -3.89   0.000    -2.45e-16   -8.10e-17
+      stadis |   .0003091   .0002966     1.04   0.297    -.0002723    .0008904
+     stadis2 |  -4.53e-07   2.59e-07    -1.75   0.080    -9.61e-07    5.49e-08
+     stadis3 |   1.30e-10   8.25e-11     1.58   0.115    -3.16e-11    2.92e-10
+     stadis4 |  -1.07e-14   8.51e-15    -1.26   0.207    -2.74e-14    5.94e-15
+    stations |   .2346686   .0555746     4.22   0.000     .1257445    .3435928
+       _cons |   -1.27458   .5683016    -2.24   0.025    -2.388431   -.1607294
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.8810266   .1312382    -6.71   0.000    -1.138249   -.6238046
+     lTotPop |   .0466498   .0170896     2.73   0.006     .0131549    .0801447
+       water |   -.082974   .0568211    -1.46   0.144    -.1943412    .0283932
+         emp |   .0013135   .0002373     5.53   0.000     .0008483    .0017786
+        emp2 |  -1.79e-07   3.40e-08    -5.26   0.000    -2.46e-07   -1.12e-07
+        emp3 |   9.52e-12   2.01e-12     4.73   0.000     5.57e-12    1.35e-11
+        emp4 |  -1.79e-16   4.21e-17    -4.25   0.000    -2.61e-16   -9.65e-17
+      stadis |   .0003445   .0002935     1.17   0.240    -.0002307    .0009197
+     stadis2 |  -4.19e-07   2.56e-07    -1.64   0.102    -9.21e-07    8.31e-08
+     stadis3 |   1.23e-10   8.13e-11     1.52   0.130    -3.62e-11    2.83e-10
+     stadis4 |  -1.05e-14   8.38e-15    -1.25   0.211    -2.69e-14    5.94e-15
+    stations |   .2423663   .0547384     4.43   0.000     .1350811    .3496515
+  immigshare |   1.492608    .278579     5.36   0.000     .9466033    2.038613
+       lAvFI |  -.0195626   .1004874    -0.19   0.846    -.2165143     .177389
+      Bshare |   .2749794   .1608888     1.71   0.087    -.0403568    .5903157
+       _cons |  -1.605381   1.027338    -1.56   0.118    -3.618927    .4081659
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |   .0359668   .0273105     1.32   0.188    -.0175609    .0894945
+          g1 |   .0359668   .0273105     1.32   0.188    -.0175609    .0894945
+          g3 |  -.0198422   .0147193    -1.35   0.178    -.0486916    .0090071
+        __TC |   .0520913   .0514756     1.01   0.312     -.048799    .1529817
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. *queens
+. preserve
+
+. drop if queens==0
+(2,296 observations deleted)
+
+. local controls lTotPop $geo
+
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 1308
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.3345531   .0457425    -7.31   0.000    -.4242068   -.2448993
+     lTotPop |    .042931   .0109659     3.91   0.000     .0214382    .0644237
+       water |  -.1041626   .0345249    -3.02   0.003    -.1718302    -.036495
+         emp |  -.0004977   .0000969    -5.14   0.000    -.0006876   -.0003078
+        emp2 |   5.18e-08   1.18e-08     4.40   0.000     2.87e-08    7.50e-08
+        emp3 |  -2.56e-12   5.90e-13    -4.33   0.000    -3.71e-12   -1.40e-12
+        emp4 |   4.57e-17   1.03e-17     4.41   0.000     2.54e-17    6.59e-17
+      stadis |  -.0012253   .0001121   -10.93   0.000     -.001445   -.0010056
+     stadis2 |   5.46e-07   6.19e-08     8.82   0.000     4.25e-07    6.68e-07
+     stadis3 |  -9.08e-11   1.26e-11    -7.20   0.000    -1.16e-10   -6.61e-11
+     stadis4 |   5.06e-15   8.42e-16     6.00   0.000     3.41e-15    6.71e-15
+    stations |   .0306508   .0551061     0.56   0.578    -.0773551    .1386568
+       _cons |   6.159489   .4643866    13.26   0.000     5.249308     7.06967
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.1670385   .0499878    -3.34   0.001    -.2650128   -.0690642
+     lTotPop |   .0439959    .010665     4.13   0.000      .023093    .0648989
+       water |  -.1340477   .0334128    -4.01   0.000    -.1995357   -.0685598
+         emp |  -.0004739   .0000941    -5.04   0.000    -.0006583   -.0002895
+        emp2 |   4.81e-08   1.15e-08     4.19   0.000     2.56e-08    7.06e-08
+        emp3 |  -2.22e-12   5.76e-13    -3.86   0.000    -3.35e-12   -1.09e-12
+        emp4 |   3.69e-17   1.01e-17     3.64   0.000     1.70e-17    5.67e-17
+      stadis |  -.0009427   .0001128    -8.36   0.000    -.0011638   -.0007217
+     stadis2 |   4.27e-07   6.17e-08     6.93   0.000     3.06e-07    5.48e-07
+     stadis3 |  -7.00e-11   1.25e-11    -5.61   0.000    -9.44e-11   -4.55e-11
+     stadis4 |   3.81e-15   8.29e-16     4.60   0.000     2.18e-15    5.43e-15
+    stations |   .0619822   .0530037     1.17   0.242    -.0419031    .1658675
+    ownerosh |  -.5913342   .0572156   -10.34   0.000    -.7034747   -.4791937
+      Bshare |    .440718   .1185173     3.72   0.000     .2084284    .6730076
+  immigshare |   1.260634   .2633023     4.79   0.000     .7445708    1.776697
+       _cons |   4.446175   .4811693     9.24   0.000       3.5031    5.389249
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |   -.205171   .0238608    -8.60   0.000    -.2519373   -.1584046
+          g1 |   -.205171   .0238608    -8.60   0.000    -.2519373   -.1584046
+          g3 |   .0775882   .0173495     4.47   0.000     .0435837    .1115926
+        __TC |  -.3327538   .0459551    -7.24   0.000    -.4228241   -.2426836
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 1308
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .4320346   .1193099     3.62   0.000     .1981915    .6658778
+     lTotPop |   .0417391   .0111363     3.75   0.000     .0199125    .0635658
+       water |  -.0599217   .0345963    -1.73   0.083    -.1277292    .0078857
+         emp |  -.0004582   .0000984    -4.66   0.000    -.0006511   -.0002653
+        emp2 |   4.28e-08   1.19e-08     3.58   0.000     1.94e-08    6.62e-08
+        emp3 |  -1.97e-12   5.95e-13    -3.32   0.001    -3.14e-12   -8.09e-13
+        emp4 |   3.43e-17   1.04e-17     3.30   0.001     1.40e-17    5.47e-17
+      stadis |  -.0013292   .0001145   -11.61   0.000    -.0015536   -.0011048
+     stadis2 |   6.03e-07   6.34e-08     9.51   0.000     4.79e-07    7.27e-07
+     stadis3 |  -1.02e-10   1.29e-11    -7.89   0.000    -1.27e-10   -7.65e-11
+     stadis4 |   5.71e-15   8.60e-16     6.63   0.000     4.02e-15    7.39e-15
+    stations |   .0197878   .0559513     0.35   0.724    -.0898747    .1294504
+       _cons |   3.430485   .2858926    12.00   0.000     2.870146    3.990824
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |    .440718   .1185173     3.72   0.000     .2084284    .6730076
+     lTotPop |   .0439959    .010665     4.13   0.000      .023093    .0648989
+       water |  -.1340477   .0334128    -4.01   0.000    -.1995357   -.0685598
+         emp |  -.0004739   .0000941    -5.04   0.000    -.0006583   -.0002895
+        emp2 |   4.81e-08   1.15e-08     4.19   0.000     2.56e-08    7.06e-08
+        emp3 |  -2.22e-12   5.76e-13    -3.86   0.000    -3.35e-12   -1.09e-12
+        emp4 |   3.69e-17   1.01e-17     3.64   0.000     1.70e-17    5.67e-17
+      stadis |  -.0009427   .0001128    -8.36   0.000    -.0011638   -.0007217
+     stadis2 |   4.27e-07   6.17e-08     6.93   0.000     3.06e-07    5.48e-07
+     stadis3 |  -7.00e-11   1.25e-11    -5.61   0.000    -9.44e-11   -4.55e-11
+     stadis4 |   3.81e-15   8.29e-16     4.60   0.000     2.18e-15    5.43e-15
+    stations |   .0619822   .0530037     1.17   0.242    -.0419031    .1658675
+    ownerosh |  -.5913342   .0572156   -10.34   0.000    -.7034747   -.4791937
+       lAvFI |  -.1670385   .0499878    -3.34   0.001    -.2650128   -.0690642
+  immigshare |   1.260634   .2633023     4.79   0.000     .7445708    1.776697
+       _cons |   4.446175   .4811693     9.24   0.000       3.5031    5.389249
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .0284232   .0371283     0.77   0.444    -.0443469    .1011934
+          g1 |   .0284232   .0371283     0.77   0.444    -.0443469    .1011934
+          g3 |  -.1369876   .0329882    -4.15   0.000    -.2016433    -.072332
+        __TC |  -.0801412   .0748473    -1.07   0.284    -.2268393    .0665569
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 1308
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |  -.2611817   .2494024    -1.05   0.295    -.7500014     .227638
+     lTotPop |   .0442964   .0113031     3.92   0.000     .0221427      .06645
+       water |  -.0660511   .0348649    -1.89   0.058     -.134385    .0022828
+         emp |   -.000489   .0000997    -4.90   0.000    -.0006844   -.0002936
+        emp2 |   4.65e-08   1.21e-08     3.83   0.000     2.27e-08    7.03e-08
+        emp3 |  -2.16e-12   6.09e-13    -3.54   0.000    -3.35e-12   -9.62e-13
+        emp4 |   3.73e-17   1.07e-17     3.49   0.000     1.63e-17    5.83e-17
+      stadis |    -.00128   .0001141   -11.21   0.000    -.0015037   -.0010563
+     stadis2 |   5.71e-07   6.31e-08     9.05   0.000     4.47e-07    6.95e-07
+     stadis3 |  -9.56e-11   1.29e-11    -7.44   0.000    -1.21e-10   -7.04e-11
+     stadis4 |   5.32e-15   8.58e-16     6.20   0.000     3.64e-15    7.00e-15
+    stations |      .0245   .0562072     0.44   0.663     -.085664    .1346641
+       _cons |   3.537396   .2969346    11.91   0.000     2.955415    4.119377
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   1.260634   .2633023     4.79   0.000     .7445708    1.776697
+     lTotPop |   .0439959    .010665     4.13   0.000      .023093    .0648989
+       water |  -.1340477   .0334128    -4.01   0.000    -.1995357   -.0685598
+         emp |  -.0004739   .0000941    -5.04   0.000    -.0006583   -.0002895
+        emp2 |   4.81e-08   1.15e-08     4.19   0.000     2.56e-08    7.06e-08
+        emp3 |  -2.22e-12   5.76e-13    -3.86   0.000    -3.35e-12   -1.09e-12
+        emp4 |   3.69e-17   1.01e-17     3.64   0.000     1.70e-17    5.67e-17
+      stadis |  -.0009427   .0001128    -8.36   0.000    -.0011638   -.0007217
+     stadis2 |   4.27e-07   6.17e-08     6.93   0.000     3.06e-07    5.48e-07
+     stadis3 |  -7.00e-11   1.25e-11    -5.61   0.000    -9.44e-11   -4.55e-11
+     stadis4 |   3.81e-15   8.29e-16     4.60   0.000     2.18e-15    5.43e-15
+    stations |   .0619822   .0530037     1.17   0.242    -.0419031    .1658675
+    ownerosh |  -.5913342   .0572156   -10.34   0.000    -.7034747   -.4791937
+       lAvFI |  -.1670385   .0499878    -3.34   0.001    -.2650128   -.0690642
+      Bshare |    .440718   .1185173     3.72   0.000     .2084284    .6730076
+       _cons |   4.446175   .4811693     9.24   0.000       3.5031    5.389249
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |  -1.020724   .1220073    -8.37   0.000    -1.259854   -.7815942
+          g1 |  -1.020724   .1220073    -8.37   0.000    -1.259854   -.7815942
+          g3 |   -.207345   .0610464    -3.40   0.001    -.3269937   -.0876963
+        __TC |  -2.248793   .2562461    -8.78   0.000    -2.751026    -1.74656
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 1308
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.5718111   .0508416   -11.25   0.000    -.6714588   -.4721635
+     lTotPop |   .0525832   .0107174     4.91   0.000     .0315774    .0735889
+       water |  -.1290015   .0336921    -3.83   0.000    -.1950368   -.0629661
+         emp |  -.0005454   .0000945    -5.77   0.000    -.0007307   -.0003601
+        emp2 |   5.56e-08   1.15e-08     4.84   0.000     3.31e-08    7.81e-08
+        emp3 |  -2.59e-12   5.73e-13    -4.53   0.000    -3.71e-12   -1.47e-12
+        emp4 |   4.36e-17   1.00e-17     4.36   0.000     2.40e-17    6.32e-17
+      stadis |  -.0009412    .000113    -8.33   0.000    -.0011626   -.0007198
+     stadis2 |   4.13e-07   6.19e-08     6.67   0.000     2.92e-07    5.34e-07
+     stadis3 |  -6.64e-11   1.25e-11    -5.29   0.000    -9.10e-11   -4.18e-11
+     stadis4 |   3.55e-15   8.35e-16     4.25   0.000     1.91e-15    5.18e-15
+    stations |     .06535   .0537926     1.21   0.224    -.0400815    .1707815
+       _cons |   3.506714   .2741907    12.79   0.000     2.969311    4.044118
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.5913342   .0572156   -10.34   0.000    -.7034747   -.4791937
+     lTotPop |   .0439959    .010665     4.13   0.000      .023093    .0648989
+       water |  -.1340477   .0334128    -4.01   0.000    -.1995357   -.0685598
+         emp |  -.0004739   .0000941    -5.04   0.000    -.0006583   -.0002895
+        emp2 |   4.81e-08   1.15e-08     4.19   0.000     2.56e-08    7.06e-08
+        emp3 |  -2.22e-12   5.76e-13    -3.86   0.000    -3.35e-12   -1.09e-12
+        emp4 |   3.69e-17   1.01e-17     3.64   0.000     1.70e-17    5.67e-17
+      stadis |  -.0009427   .0001128    -8.36   0.000    -.0011638   -.0007217
+     stadis2 |   4.27e-07   6.17e-08     6.93   0.000     3.06e-07    5.48e-07
+     stadis3 |  -7.00e-11   1.25e-11    -5.61   0.000    -9.44e-11   -4.55e-11
+     stadis4 |   3.81e-15   8.29e-16     4.60   0.000     2.18e-15    5.43e-15
+    stations |   .0619822   .0530037     1.17   0.242    -.0419031    .1658675
+  immigshare |   1.260634   .2633023     4.79   0.000     .7445708    1.776697
+       lAvFI |  -.1670385   .0499878    -3.34   0.001    -.2650128   -.0690642
+      Bshare |    .440718   .1185173     3.72   0.000     .2084284    .6730076
+       _cons |   4.446175   .4811693     9.24   0.000       3.5031    5.389249
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |   .0991764   .0218526     4.54   0.000     .0563461    .1420068
+          g1 |   .0991764   .0218526     4.54   0.000     .0563461    .1420068
+          g3 |  -.0041801   .0055601    -0.75   0.452    -.0150777    .0067176
+        __TC |   .1941728   .0434457     4.47   0.000     .1090208    .2793248
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. *bronx
+. preserve
+
+. drop if bronx==0
+(3,102 observations deleted)
+
+. local controls lTotPop $geo
+
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 492
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |   .1719566   .1223542     1.41   0.160    -.0678532    .4117663
+     lTotPop |   .0997068   .0228674     4.36   0.000     .0548876    .1445261
+       water |  -.2462657   .0901224    -2.73   0.006    -.4229024    -.069629
+         emp |   .0032485   .0023545     1.38   0.168    -.0013662    .0078633
+        emp2 |  -2.93e-07   2.51e-07    -1.17   0.243    -7.85e-07    1.99e-07
+        emp3 |   1.08e-11   1.16e-11     0.93   0.351    -1.19e-11    3.35e-11
+        emp4 |  -1.42e-16   1.96e-16    -0.72   0.469    -5.26e-16    2.42e-16
+      stadis |   -.001522   .0004599    -3.31   0.001    -.0024234   -.0006205
+     stadis2 |   6.61e-07   3.84e-07     1.72   0.085    -9.18e-08    1.41e-06
+     stadis3 |  -1.16e-10   1.17e-10    -1.00   0.320    -3.46e-10    1.13e-10
+     stadis4 |   6.58e-15   1.13e-14     0.58   0.561    -1.56e-14    2.88e-14
+    stations |   .0368775   .1067898     0.35   0.730    -.1724266    .2461817
+       _cons |  -11.75122   8.184294    -1.44   0.151    -27.79214      4.2897
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |   .2905788   .1134994     2.56   0.010     .0681241    .5130335
+     lTotPop |   .0695682    .020994     3.31   0.001     .0284207    .1107158
+       water |  -.2192921   .0805299    -2.72   0.006    -.3771279   -.0614563
+         emp |   .0030022   .0020946     1.43   0.152    -.0011031    .0071075
+        emp2 |  -3.01e-07   2.23e-07    -1.35   0.178    -7.38e-07    1.37e-07
+        emp3 |   1.28e-11   1.03e-11     1.24   0.214    -7.38e-12    3.30e-11
+        emp4 |  -1.99e-16   1.74e-16    -1.14   0.253    -5.40e-16    1.42e-16
+      stadis |  -.0007958   .0004106    -1.94   0.053    -.0016005    8.96e-06
+     stadis2 |   4.89e-07   3.39e-07     1.44   0.149    -1.75e-07    1.15e-06
+     stadis3 |  -1.08e-10   1.03e-10    -1.05   0.292    -3.10e-10    9.31e-11
+     stadis4 |   7.84e-15   9.95e-15     0.79   0.431    -1.17e-14    2.73e-14
+    stations |   .1281811   .0938975     1.37   0.172    -.0558547    .3122169
+    ownerosh |  -1.744562   .1781802    -9.79   0.000    -2.093788   -1.395335
+      Bshare |   .2626303    .262057     1.00   0.316     -.250992    .7762525
+  immigshare |   2.435978   .4497332     5.42   0.000     1.554518    3.317439
+       _cons |  -11.54706   7.244296    -1.59   0.111    -25.74562    2.651501
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |  -.2080049   .0532789    -3.90   0.000    -.3124296   -.1035801
+          g1 |  -.2080049   .0532789    -3.90   0.000    -.3124296   -.1035801
+          g3 |   .1219213   .0372026     3.28   0.001     .0490054    .1948371
+        __TC |  -.2940885   .1177897    -2.50   0.013    -.5249521   -.0632249
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 492
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |  -.3021608   .2616119    -1.15   0.248    -.8149107    .2105891
+     lTotPop |   .1036364    .023077     4.49   0.000     .0584064    .1488665
+       water |  -.2342058   .0905147    -2.59   0.010    -.4116113   -.0568002
+         emp |   .0033418   .0023763     1.41   0.160    -.0013157    .0079993
+        emp2 |  -3.02e-07   2.53e-07    -1.19   0.234    -7.98e-07    1.95e-07
+        emp3 |   1.11e-11   1.17e-11     0.95   0.340    -1.18e-11    3.40e-11
+        emp4 |  -1.46e-16   1.97e-16    -0.74   0.459    -5.33e-16    2.41e-16
+      stadis |  -.0014948   .0004614    -3.24   0.001    -.0023993   -.0005904
+     stadis2 |   6.41e-07   3.85e-07     1.67   0.096    -1.13e-07    1.40e-06
+     stadis3 |  -1.12e-10   1.17e-10    -0.96   0.337    -3.42e-10    1.17e-10
+     stadis4 |   6.31e-15   1.13e-14     0.56   0.578    -1.59e-14    2.85e-14
+    stations |   .0361687   .1068581     0.34   0.735    -.1732693    .2456066
+       _cons |  -10.71644   8.092701    -1.32   0.185    -26.57785     5.14496
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   .2626303    .262057     1.00   0.316     -.250992    .7762525
+     lTotPop |   .0695682    .020994     3.31   0.001     .0284207    .1107158
+       water |  -.2192921   .0805299    -2.72   0.006    -.3771279   -.0614563
+         emp |   .0030022   .0020946     1.43   0.152    -.0011031    .0071075
+        emp2 |  -3.01e-07   2.23e-07    -1.35   0.178    -7.38e-07    1.37e-07
+        emp3 |   1.28e-11   1.03e-11     1.24   0.214    -7.38e-12    3.30e-11
+        emp4 |  -1.99e-16   1.74e-16    -1.14   0.253    -5.40e-16    1.42e-16
+      stadis |  -.0007958   .0004106    -1.94   0.053    -.0016005    8.96e-06
+     stadis2 |   4.89e-07   3.39e-07     1.44   0.149    -1.75e-07    1.15e-06
+     stadis3 |  -1.08e-10   1.03e-10    -1.05   0.292    -3.10e-10    9.31e-11
+     stadis4 |   7.84e-15   9.95e-15     0.79   0.431    -1.17e-14    2.73e-14
+    stations |   .1281811   .0938975     1.37   0.172    -.0558547    .3122169
+    ownerosh |  -1.744562   .1781802    -9.79   0.000    -2.093788   -1.395335
+       lAvFI |   .2905788   .1134994     2.56   0.010     .0681241    .5130335
+  immigshare |   2.435978   .4497332     5.42   0.000     1.554518    3.317439
+       _cons |  -11.54706   7.244296    -1.59   0.111    -25.74562    2.651501
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .2158211   .1081783     2.00   0.046     .0037956    .4278467
+          g1 |   .2158211   .1081783     2.00   0.046     .0037956    .4278467
+          g3 |  -.6162446     .12765    -4.83   0.000    -.8664339   -.3660553
+        __TC |  -.1846023   .2620295    -0.70   0.481    -.6981708    .3289661
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 492
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   2.832664   .4353137     6.51   0.000     1.979465    3.685863
+     lTotPop |   .1232712   .0222472     5.54   0.000     .0796674    .1668749
+       water |  -.1452198   .0878483    -1.65   0.098    -.3173992    .0269597
+         emp |   .0028773   .0022463     1.28   0.200    -.0015253      .00728
+        emp2 |  -2.76e-07   2.39e-07    -1.15   0.249    -7.45e-07    1.93e-07
+        emp3 |   1.10e-11   1.10e-11     0.99   0.320    -1.07e-11    3.26e-11
+        emp4 |  -1.59e-16   1.87e-16    -0.85   0.394    -5.25e-16    2.07e-16
+      stadis |  -.0009774   .0004499    -2.17   0.030    -.0018592   -.0000957
+     stadis2 |   3.88e-07   3.71e-07     1.04   0.297    -3.40e-07    1.12e-06
+     stadis3 |  -6.11e-11   1.13e-10    -0.54   0.588    -2.82e-10    1.60e-10
+     stadis4 |   2.74e-15   1.09e-14     0.25   0.802    -1.86e-14    2.41e-14
+    stations |    .087795   .1028822     0.85   0.393    -.1138504    .2894404
+       _cons |   -9.43183   7.663142    -1.23   0.218    -24.45131    5.587653
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   2.435978   .4497332     5.42   0.000     1.554518    3.317439
+     lTotPop |   .0695682    .020994     3.31   0.001     .0284207    .1107158
+       water |  -.2192921   .0805299    -2.72   0.006    -.3771279   -.0614563
+         emp |   .0030022   .0020946     1.43   0.152    -.0011031    .0071075
+        emp2 |  -3.01e-07   2.23e-07    -1.35   0.178    -7.38e-07    1.37e-07
+        emp3 |   1.28e-11   1.03e-11     1.24   0.214    -7.38e-12    3.30e-11
+        emp4 |  -1.99e-16   1.74e-16    -1.14   0.253    -5.40e-16    1.42e-16
+      stadis |  -.0007958   .0004106    -1.94   0.053    -.0016005    8.96e-06
+     stadis2 |   4.89e-07   3.39e-07     1.44   0.149    -1.75e-07    1.15e-06
+     stadis3 |  -1.08e-10   1.03e-10    -1.05   0.292    -3.10e-10    9.31e-11
+     stadis4 |   7.84e-15   9.95e-15     0.79   0.431    -1.17e-14    2.73e-14
+    stations |   .1281811   .0938975     1.37   0.172    -.0558547    .3122169
+    ownerosh |  -1.744562   .1781802    -9.79   0.000    -2.093788   -1.395335
+       lAvFI |   .2905788   .1134994     2.56   0.010     .0681241    .5130335
+      Bshare |   .2626303    .262057     1.00   0.316     -.250992    .7762525
+       _cons |  -11.54706   7.244296    -1.59   0.111    -25.74562    2.651501
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |   .3968034   .1879197     2.11   0.035     .0284876    .7651192
+          g1 |   .3968034   .1879197     2.11   0.035     .0284876    .7651192
+          g3 |  -.1996616   .2001065    -1.00   0.318    -.5918632      .19254
+        __TC |   .5939452   .4324797     1.37   0.170    -.2536995     1.44159
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 492
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -1.777723   .1794054    -9.91   0.000    -2.129351   -1.426095
+     lTotPop |   .0526006   .0214174     2.46   0.014     .0106234    .0945779
+       water |  -.2918747   .0823936    -3.54   0.000    -.4533632   -.1303862
+         emp |    .002756   .0021349     1.29   0.197    -.0014283    .0069403
+        emp2 |  -2.49e-07   2.27e-07    -1.10   0.273    -6.95e-07    1.97e-07
+        emp3 |   9.41e-12   1.05e-11     0.90   0.369    -1.11e-11    3.00e-11
+        emp4 |  -1.27e-16   1.77e-16    -0.72   0.474    -4.74e-16    2.20e-16
+      stadis |  -.0012573   .0004207    -2.99   0.003    -.0020818   -.0004327
+     stadis2 |   7.19e-07   3.51e-07     2.05   0.040     3.18e-08    1.41e-06
+     stadis3 |  -1.58e-10   1.07e-10    -1.48   0.139    -3.67e-10    5.14e-11
+     stadis4 |   1.15e-14   1.04e-14     1.11   0.266    -8.77e-15    3.18e-14
+    stations |   .0823094   .0975941     0.84   0.399    -.1089715    .2735903
+       _cons |  -8.314684   7.283441    -1.14   0.254    -22.58997    5.960599
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -1.744562   .1781802    -9.79   0.000    -2.093788   -1.395335
+     lTotPop |   .0695682    .020994     3.31   0.001     .0284207    .1107158
+       water |  -.2192921   .0805299    -2.72   0.006    -.3771279   -.0614563
+         emp |   .0030022   .0020946     1.43   0.152    -.0011031    .0071075
+        emp2 |  -3.01e-07   2.23e-07    -1.35   0.178    -7.38e-07    1.37e-07
+        emp3 |   1.28e-11   1.03e-11     1.24   0.214    -7.38e-12    3.30e-11
+        emp4 |  -1.99e-16   1.74e-16    -1.14   0.253    -5.40e-16    1.42e-16
+      stadis |  -.0007958   .0004106    -1.94   0.053    -.0016005    8.96e-06
+     stadis2 |   4.89e-07   3.39e-07     1.44   0.149    -1.75e-07    1.15e-06
+     stadis3 |  -1.08e-10   1.03e-10    -1.05   0.292    -3.10e-10    9.31e-11
+     stadis4 |   7.84e-15   9.95e-15     0.79   0.431    -1.17e-14    2.73e-14
+    stations |   .1281811   .0938975     1.37   0.172    -.0558547    .3122169
+  immigshare |   2.435978   .4497332     5.42   0.000     1.554518    3.317439
+       lAvFI |   .2905788   .1134994     2.56   0.010     .0681241    .5130335
+      Bshare |   .2626303    .262057     1.00   0.316     -.250992    .7762525
+       _cons |  -11.54706   7.244296    -1.59   0.111    -25.74562    2.651501
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |  -.1041891    .051879    -2.01   0.045      -.20587   -.0025082
+          g1 |  -.1041891    .051879    -2.01   0.045      -.20587   -.0025082
+          g3 |  -.0183604    .020416    -0.90   0.368     -.058375    .0216542
+        __TC |  -.2267386   .1048444    -2.16   0.031    -.4322298   -.0212473
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. 
+. *staten island
+. preserve
+
+. drop if island ==0
+(2,921 observations deleted)
+
+. local controls lTotPop $geo
+
+. b1x2 FAR, x1all(lAvFI `controls') x2all(ownerosh Bshare immigshare) x2delta(g1 =ownerosh :
+> g1=Bshare:g3=immigshare) x1only(lAvFI)
+
+                                                      Number of obs = 700
+
+
+Restricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |  -.1164325   .0828468    -1.41   0.160    -.2788092    .0459443
+     lTotPop |  -.0854679   .0211185    -4.05   0.000    -.1268595   -.0440763
+       water |   .1282889   .0381125     3.37   0.001     .0535898     .202988
+         emp |  -.0023284   .0009411    -2.47   0.013     -.004173   -.0004839
+        emp2 |   1.08e-07   5.93e-08     1.82   0.069    -8.39e-09    2.24e-07
+        emp3 |  -1.98e-12   1.63e-12    -1.22   0.224    -5.17e-12    1.21e-12
+        emp4 |   1.12e-17   1.64e-17     0.68   0.496    -2.10e-17    4.34e-17
+      stadis |  -.0003387   .0001072    -3.16   0.002    -.0005488   -.0001286
+     stadis2 |   1.64e-07   5.00e-08     3.28   0.001     6.57e-08    2.62e-07
+     stadis3 |  -2.44e-11   8.59e-12    -2.84   0.005    -4.12e-11   -7.53e-12
+     stadis4 |   1.34e-15   4.84e-16     2.78   0.006     3.95e-16    2.29e-15
+    stations |   .0866965   .0922017     0.94   0.347    -.0940154    .2674085
+       _cons |   19.64548   5.578106     3.52   0.000     8.712594    30.57837
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 statio
+> ns  ownerosh Bshare immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       lAvFI |   .2901841   .1117604     2.60   0.009     .0711378    .5092304
+     lTotPop |  -.0851916   .0216069    -3.94   0.000    -.1275402   -.0428429
+       water |   .1012587    .039305     2.58   0.010     .0242223    .1782951
+         emp |  -.0020488   .0009306    -2.20   0.028    -.0038728   -.0002247
+        emp2 |   9.13e-08   5.87e-08     1.55   0.120    -2.38e-08    2.06e-07
+        emp3 |  -1.53e-12   1.61e-12    -0.95   0.344    -4.69e-12    1.64e-12
+        emp4 |   6.61e-18   1.63e-17     0.41   0.685    -2.54e-17    3.86e-17
+      stadis |  -.0003238   .0001058    -3.06   0.002    -.0005312   -.0001164
+     stadis2 |   1.46e-07   4.99e-08     2.92   0.003     4.79e-08    2.44e-07
+     stadis3 |  -1.95e-11   8.64e-12    -2.26   0.024    -3.65e-11   -2.60e-12
+     stadis4 |   9.83e-16   4.88e-16     2.01   0.044     2.55e-17    1.94e-15
+    stations |   .1068901   .0903346     1.18   0.237    -.0701625    .2839427
+    ownerosh |   -.521851   .1301813    -4.01   0.000    -.7770017   -.2667004
+      Bshare |   1.826769   .4245826     4.30   0.000     .9946022    2.658935
+  immigshare |   .4079208   .4116374     0.99   0.322    -.3988737    1.214715
+       _cons |    14.6037   5.618386     2.60   0.009     3.591867    25.61554
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       lAvFI lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = Bshare
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+lAvFI        |
+          g1 |  -.1866898   .0483608    -3.86   0.000    -.2814753   -.0919043
+          g1 |  -.1866898   .0483608    -3.86   0.000    -.2814753   -.0919043
+          g3 |  -.0270496   .0274878    -0.98   0.325    -.0809247    .0268255
+        __TC |  -.4004293   .1077006    -3.72   0.000    -.6115186   -.1893399
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(Bshare `controls') x2all(ownerosh lAvFI immigshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=immigshare) x1only(Bshare)
+
+                                                      Number of obs = 700
+
+
+Restricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   1.674933   .3732379     4.49   0.000     .9433998    2.406465
+     lTotPop |   -.101874   .0211355    -4.82   0.000    -.1432989   -.0604492
+       water |   .1416323   .0372244     3.80   0.000     .0686738    .2145907
+         emp |  -.0024576   .0009246    -2.66   0.008    -.0042698   -.0006453
+        emp2 |   1.17e-07   5.83e-08     2.01   0.044     3.14e-09    2.32e-07
+        emp3 |  -2.27e-12   1.60e-12    -1.42   0.157    -5.41e-12    8.69e-13
+        emp4 |   1.43e-17   1.62e-17     0.88   0.377    -1.74e-17    4.60e-17
+      stadis |  -.0003189   .0001047    -3.05   0.002     -.000524   -.0001137
+     stadis2 |   1.38e-07   4.88e-08     2.82   0.005     4.21e-08    2.33e-07
+     stadis3 |  -1.84e-11   8.43e-12    -2.18   0.030    -3.49e-11   -1.82e-12
+     stadis4 |   9.39e-16   4.77e-16     1.97   0.049     3.17e-18    1.87e-15
+    stations |   .0769797   .0908322     0.85   0.397    -.1010482    .2550076
+       _cons |   19.37405   5.357148     3.62   0.000     8.874233    29.87387
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stati
+> ons  ownerosh lAvFI immigshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      Bshare |   1.826769   .4245826     4.30   0.000     .9946022    2.658935
+     lTotPop |  -.0851916   .0216069    -3.94   0.000    -.1275402   -.0428429
+       water |   .1012587    .039305     2.58   0.010     .0242223    .1782951
+         emp |  -.0020488   .0009306    -2.20   0.028    -.0038728   -.0002247
+        emp2 |   9.13e-08   5.87e-08     1.55   0.120    -2.38e-08    2.06e-07
+        emp3 |  -1.53e-12   1.61e-12    -0.95   0.344    -4.69e-12    1.64e-12
+        emp4 |   6.61e-18   1.63e-17     0.41   0.685    -2.54e-17    3.86e-17
+      stadis |  -.0003238   .0001058    -3.06   0.002    -.0005312   -.0001164
+     stadis2 |   1.46e-07   4.99e-08     2.92   0.003     4.79e-08    2.44e-07
+     stadis3 |  -1.95e-11   8.64e-12    -2.26   0.024    -3.65e-11   -2.60e-12
+     stadis4 |   9.83e-16   4.88e-16     2.01   0.044     2.55e-17    1.94e-15
+    stations |   .1068901   .0903346     1.18   0.237    -.0701625    .2839427
+    ownerosh |   -.521851   .1301813    -4.01   0.000    -.7770017   -.2667004
+       lAvFI |   .2901841   .1117604     2.60   0.009     .0711378    .5092304
+  immigshare |   .4079208   .4116374     0.99   0.322    -.3988737    1.214715
+       _cons |    14.6037   5.618386     2.60   0.009     3.591867    25.61554
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       Bshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = immigshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+Bshare       |
+          g1 |   .4660909   .1334201     3.49   0.000     .2045922    .7275896
+          g1 |   .4660909   .1334201     3.49   0.000     .2045922    .7275896
+          g3 |    .020324   .0257116     0.79   0.429    -.0300698    .0707179
+        __TC |   .9525058   .2724692     3.50   0.000     .4184759    1.486536
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(immigshare `controls') x2all(ownerosh lAvFI Bshare) x2delta(g1 =ownerosh :
+> g1=lAvFI:g3=Bshare) x1only(immigshare)
+
+                                                      Number of obs = 700
+
+
+Restricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |  -.0990998   .3803812    -0.26   0.794    -.8446332    .6464337
+     lTotPop |  -.0864811   .0211954    -4.08   0.000    -.1280232   -.0449389
+       water |   .1360461   .0377504     3.60   0.000     .0620566    .2100356
+         emp |  -.0021909   .0009387    -2.33   0.020    -.0040308   -.0003511
+        emp2 |   9.94e-08   5.92e-08     1.68   0.093    -1.66e-08    2.15e-07
+        emp3 |  -1.76e-12   1.63e-12    -1.08   0.280    -4.94e-12    1.43e-12
+        emp4 |   9.07e-18   1.64e-17     0.55   0.581    -2.31e-17    4.13e-17
+      stadis |  -.0003121   .0001075    -2.90   0.004    -.0005228   -.0001014
+     stadis2 |   1.51e-07   5.00e-08     3.01   0.003     5.25e-08    2.49e-07
+     stadis3 |  -2.22e-11   8.59e-12    -2.58   0.010    -3.91e-11   -5.36e-12
+     stadis4 |   1.23e-15   4.83e-16     2.55   0.011     2.83e-16    2.18e-15
+    stations |   .0978912   .0921048     1.06   0.288     -.082631    .2784134
+       _cons |   17.87696   5.439853     3.29   0.001     7.215047    28.53888
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 s
+> tations  ownerosh lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  immigshare |   .4079208   .4116374     0.99   0.322    -.3988737    1.214715
+     lTotPop |  -.0851916   .0216069    -3.94   0.000    -.1275402   -.0428429
+       water |   .1012587    .039305     2.58   0.010     .0242223    .1782951
+         emp |  -.0020488   .0009306    -2.20   0.028    -.0038728   -.0002247
+        emp2 |   9.13e-08   5.87e-08     1.55   0.120    -2.38e-08    2.06e-07
+        emp3 |  -1.53e-12   1.61e-12    -0.95   0.344    -4.69e-12    1.64e-12
+        emp4 |   6.61e-18   1.63e-17     0.41   0.685    -2.54e-17    3.86e-17
+      stadis |  -.0003238   .0001058    -3.06   0.002    -.0005312   -.0001164
+     stadis2 |   1.46e-07   4.99e-08     2.92   0.003     4.79e-08    2.44e-07
+     stadis3 |  -1.95e-11   8.64e-12    -2.26   0.024    -3.65e-11   -2.60e-12
+     stadis4 |   9.83e-16   4.88e-16     2.01   0.044     2.55e-17    1.94e-15
+    stations |   .1068901   .0903346     1.18   0.237    -.0701625    .2839427
+    ownerosh |   -.521851   .1301813    -4.01   0.000    -.7770017   -.2667004
+       lAvFI |   .2901841   .1117604     2.60   0.009     .0711378    .5092304
+      Bshare |   1.826769   .4245826     4.30   0.000     .9946022    2.658935
+       _cons |    14.6037   5.618386     2.60   0.009     3.591867    25.61554
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       immigshare lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = ownerosh
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+immigshare   |
+          g1 |  -.1943487   .0832886    -2.33   0.020    -.3575913    -.031106
+          g1 |  -.1943487   .0832886    -2.33   0.020    -.3575913    -.031106
+          g3 |     .09185   .0732591     1.25   0.210    -.0517352    .2354352
+        __TC |  -.2968473   .1956214    -1.52   0.129    -.6802582    .0865635
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. b1x2 FAR, x1all(ownerosh `controls') x2all(immigshare lAvFI Bshare) x2delta(g1 =immigshare
+>  :g1=lAvFI:g3=Bshare) x1only(ownerosh)
+
+                                                      Number of obs = 700
+
+
+Restricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions      
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |  -.4628574   .1100009    -4.21   0.000    -.6784552   -.2472595
+     lTotPop |  -.0700597   .0212218    -3.30   0.001    -.1116536   -.0284657
+       water |   .0817953   .0394499     2.07   0.038     .0044749    .1591157
+         emp |  -.0022029    .000924    -2.38   0.017     -.004014   -.0003918
+        emp2 |   1.00e-07   5.82e-08     1.72   0.086    -1.41e-08    2.14e-07
+        emp3 |  -1.75e-12   1.60e-12    -1.09   0.274    -4.88e-12    1.39e-12
+        emp4 |   8.62e-18   1.61e-17     0.53   0.593    -2.30e-17    4.03e-17
+      stadis |  -.0003539   .0001052    -3.36   0.001    -.0005602   -.0001477
+     stadis2 |   1.78e-07   4.91e-08     3.61   0.000     8.13e-08    2.74e-07
+     stadis3 |  -2.68e-11   8.46e-12    -3.17   0.002    -4.34e-11   -1.03e-11
+     stadis4 |   1.47e-15   4.76e-16     3.08   0.002     5.33e-16    2.40e-15
+    stations |   .1057134    .090903     1.16   0.245    -.0724532      .28388
+       _cons |   17.97365   5.354575     3.36   0.001     7.478874    28.46842
+------------------------------------------------------------------------------
+
+Unrestricted regression:
+
+. b1x2: reg FAR ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 sta
+> tions  immigshare lAvFI Bshare      
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+    ownerosh |   -.521851   .1301813    -4.01   0.000    -.7770017   -.2667004
+     lTotPop |  -.0851916   .0216069    -3.94   0.000    -.1275402   -.0428429
+       water |   .1012587    .039305     2.58   0.010     .0242223    .1782951
+         emp |  -.0020488   .0009306    -2.20   0.028    -.0038728   -.0002247
+        emp2 |   9.13e-08   5.87e-08     1.55   0.120    -2.38e-08    2.06e-07
+        emp3 |  -1.53e-12   1.61e-12    -0.95   0.344    -4.69e-12    1.64e-12
+        emp4 |   6.61e-18   1.63e-17     0.41   0.685    -2.54e-17    3.86e-17
+      stadis |  -.0003238   .0001058    -3.06   0.002    -.0005312   -.0001164
+     stadis2 |   1.46e-07   4.99e-08     2.92   0.003     4.79e-08    2.44e-07
+     stadis3 |  -1.95e-11   8.64e-12    -2.26   0.024    -3.65e-11   -2.60e-12
+     stadis4 |   9.83e-16   4.88e-16     2.01   0.044     2.55e-17    1.94e-15
+    stations |   .1068901   .0903346     1.18   0.237    -.0701625    .2839427
+  immigshare |   .4079208   .4116374     0.99   0.322    -.3988737    1.214715
+       lAvFI |   .2901841   .1117604     2.60   0.009     .0711378    .5092304
+      Bshare |   1.826769   .4245826     4.30   0.000     .9946022    2.658935
+       _cons |    14.6037   5.618386     2.60   0.009     3.591867    25.61554
+------------------------------------------------------------------------------
+
+Decomposition of changes in coefficients on x1 vars:
+
+       ownerosh lTotPop water emp emp2 emp3 emp4 stadis stadis2 stadis3 stadis4 stations
+
+into parts due to these groups:
+
+g1  = immigshare
+
+g1 = lAvFI
+
+g3 = Bshare
+
+------------------------------------------------------------------------------
+         FAR |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+ownerosh     |
+          g1 |   .0130309   .0139115     0.94   0.349    -.0142352     .040297
+          g1 |   .0130309   .0139115     0.94   0.349    -.0142352     .040297
+          g3 |  -.1412317   .0383492    -3.68   0.000    -.2163948   -.0660686
+        __TC |  -.1151699   .0456857    -2.52   0.012    -.2047123   -.0256276
+------------------------------------------------------------------------------
+
+Note: The __TC...  line is the sum of all x2 variables' impacts on each x1.
+      The reported covariance between this coef and all others is zero.
+      This is NOT correct!!
+
+Done with -b1x2-.
+
+
+. restore
+
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+end of do-file
+
+. log close
+      name:  <unnamed>
+       log:  /Users/elyn/Desktop/Dissertation/Zoning Laws and Labor Market Inequality/Data I
+> n Use/gelbach.log
+  log type:  text
+ closed on:  13 Oct 2019, 22:48:01
+--------------------------------------------------------------------------------------------
