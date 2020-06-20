@@ -22,13 +22,20 @@ for(i in 1:nrow(hex500)){
 }
 
 
-# Manufacturing Share
+# Manufacturing Land Use Share
 
 hex500$Mshare<-""
 for(i in 1:nrow(hex500)){
  hex500$Mshare[hex500$ID==i]= sum(hex500_zone$areaweight[hex500_zone$ID==i & hex500_zone$Use.Type=='M'])
 }
 
+
+#Commercial Land Use Share
+
+hex500$Cshare<-''
+for(i in 1:nrow(hex500)){
+  hex500$Cshare[hex500$ID==i]= sum(hex500_zone$areaweight[hex500_zone$ID==i & hex500_zone$Use.Type=='C'])
+}
 
 
 #Floor area ratio
