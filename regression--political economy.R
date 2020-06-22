@@ -9,6 +9,7 @@ all1950$Ownerosh<-all1950$Ownero/all1950$Tothouse
 all1950$Renterosh<-all1950$Rentero/all1950$Tothouse
 all1950$Unemployedsh<-all1950$Unemployed/all1950$TotPop
 all1950$ltothouse<-log(1+all1950$Tothouse)
+all1950$Stand_FAR<-(all1950$FAR-mean(all1950$FAR,na.rm = T))/std(all1950$FAR)
 df=df[is.na(df$Bshare)==F,]    #total population is zero
 df=df[is.na(df$Ownerosh)==F,]   #tothouse is equal zero
 df=df[is.na(df$AvHV)==F,]      #total housing value report is zero #This created a large deletion of polygons in manhattan
@@ -24,9 +25,9 @@ library(lmtest)
 
 #All NYC(Except Manhattan) DATA with borough dummy---Stepwise regression results
 df=all1950[all1950$manhattan==0,]
-FAR1<-lm(FAR~lAvFI+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
-FAR2<-lm(FAR~lAvFI+Ownerosh+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
-FAR3<-lm(FAR~lAvFI+Ownerosh+immig+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
+FAR1<-lm(FAR~lAvFI+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2+stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
+FAR2<-lm(FAR~lAvFI+Ownerosh+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2+stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
+FAR3<-lm(FAR~lAvFI+Ownerosh+immig+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2+tadis3+stadis4+stations+bronx+island+brooklyn,data=df)
 FAR4<-lm(FAR~lAvFI+Ownerosh+Bshare+immigshare+lTotPop+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
 FAR5<-lm(FAR~lAvFI+Ownerosh+Bshare+immigshare+density+density2+density3+density4+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
 FAR6<-lm(FAR~lAvFI+Ownerosh+Bshare+immigshare+lTotPop+Mshare+Cshare+water+emp+emp2+emp3+emp4+stadis+stadis2++stadis3+stadis4+stations+bronx+island+brooklyn,data=df)
